@@ -1,12 +1,15 @@
 import { motion } from 'motion/react';
 import { FileText, Github, ArrowRight, Play } from 'lucide-react';
 import { Paper } from '../types';
+import { useLanguage } from '../i18n';
 
 interface PaperSectionProps {
   paper: Paper;
 }
 
 export default function PaperSection({ paper }: PaperSectionProps) {
+  const { copy, text } = useLanguage();
+
   return (
     <section id="paper" className="py-24 px-6 max-w-7xl mx-auto">
       <div className="bento-card p-8 md:p-12 relative overflow-hidden group">
@@ -16,16 +19,16 @@ export default function PaperSection({ paper }: PaperSectionProps) {
         <div className="relative z-10 grid md:grid-cols-3 gap-12 items-center">
           <div className="md:col-span-2">
             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-400 text-xs font-mono mb-6">
-              <FileText size={14} /> Featured Research
+              <FileText size={14} /> {copy.paper.badge}
             </div>
-            <h2 className="text-3xl md:text-4xl font-bold mb-4 leading-tight">{paper.title}</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 leading-tight">{text(paper.title)}</h2>
             <div className="flex items-center gap-3 mb-6">
-              <p className="text-indigo-400 font-mono text-sm">{paper.venue}</p>
+              <p className="text-indigo-400 font-mono text-sm">{text(paper.venue)}</p>
               <span className="w-1 h-1 rounded-full bg-zinc-700" />
-              <p className="text-zinc-300 font-medium text-sm">Author: <span className="text-indigo-300 underline underline-offset-4 decoration-indigo-500/30">Haoyang Liu</span></p>
+              <p className="text-zinc-300 font-medium text-sm">{copy.paper.author} <span className="text-indigo-300 underline underline-offset-4 decoration-indigo-500/30">Haoyang Liu</span></p>
             </div>
             <p className="text-zinc-400 leading-relaxed mb-8 text-lg">
-              {paper.abstract}
+              {text(paper.abstract)}
             </p>
             
             <div className="flex flex-wrap gap-4">
@@ -36,7 +39,7 @@ export default function PaperSection({ paper }: PaperSectionProps) {
                   rel="noopener noreferrer"
                   className="px-6 py-3 rounded-xl bg-zinc-100 text-zinc-950 font-semibold hover:bg-white transition-all flex items-center gap-2"
                 >
-                  Read Paper <ArrowRight size={18} />
+                  {copy.paper.read} <ArrowRight size={18} />
                 </a>
               )}
               {paper.videoUrl && (
@@ -46,7 +49,7 @@ export default function PaperSection({ paper }: PaperSectionProps) {
                   rel="noopener noreferrer"
                   className="px-6 py-3 rounded-xl bg-indigo-600 text-white font-semibold hover:bg-indigo-500 transition-all flex items-center gap-2"
                 >
-                  <Play size={18} fill="currentColor" /> Watch Demo
+                  <Play size={18} fill="currentColor" /> {copy.paper.watch}
                 </a>
               )}
               {paper.codeUrl && (
@@ -56,7 +59,7 @@ export default function PaperSection({ paper }: PaperSectionProps) {
                   rel="noopener noreferrer"
                   className="px-6 py-3 rounded-xl bg-zinc-800 text-zinc-100 font-semibold hover:bg-zinc-700 transition-all flex items-center gap-2"
                 >
-                  <Github size={18} /> View Code
+                  <Github size={18} /> {copy.paper.code}
                 </a>
               )}
             </div>
@@ -72,7 +75,7 @@ export default function PaperSection({ paper }: PaperSectionProps) {
               <div className="flex-grow relative rounded-xl border border-zinc-800 overflow-hidden bg-zinc-950 shadow-inner">
                 <img 
                   src="https://picsum.photos/seed/vr-ppe-training/600/600" 
-                  alt="Personal Protection Equipment Training in VR"
+                  alt={copy.paper.imageAlt}
                   className="w-full h-full object-cover grayscale opacity-40 group-hover/mockup:grayscale-0 group-hover/mockup:opacity-100 transition-all duration-700"
                   referrerPolicy="no-referrer"
                 />

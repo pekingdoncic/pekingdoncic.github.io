@@ -8,15 +8,20 @@ import { Github, Mail, Twitter, Linkedin, ExternalLink } from 'lucide-react';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import BentoGrid from './components/BentoGrid';
+import HackathonSection from './components/HackathonSection';
+import WorkflowSection from './components/WorkflowSection';
 import PaperSection from './components/PaperSection';
 import BlogSection from './components/BlogSection';
 import DemoSection from './components/DemoSection';
 import Footer from './components/Footer';
-import { PROJECTS, FEATURED_PAPER, BLOG_POSTS, SOCIAL_LINKS } from './constants';
+import { PROJECTS, FEATURED_PAPER, BLOG_POSTS, SOCIAL_LINKS, HACKATHON_PROJECTS, AI_WORKFLOWS } from './constants';
 import StarTrail from './components/StarTrail';
 import CustomCursor from './components/CustomCursor';
+import { useLanguage } from './i18n';
 
 export default function App() {
+  const { copy, text } = useLanguage();
+
   return (
     <div className="min-h-screen bg-zinc-950 text-zinc-50 selection:bg-indigo-500/30">
       <CustomCursor />
@@ -31,7 +36,7 @@ export default function App() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             {SOCIAL_LINKS.map((link, i) => (
               <motion.a
-                key={link.name}
+                key={link.kind}
                 href={link.url}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -44,13 +49,13 @@ export default function App() {
               >
                 <div className="flex items-center gap-3">
                   <div className="w-10 h-10 rounded-xl bg-zinc-800 flex items-center justify-center text-zinc-400 group-hover:text-zinc-100 transition-colors">
-                    {link.name === 'GitHub' && <Github size={20} />}
-                    {link.name === 'Email' && <Mail size={20} />}
-                    {link.name === 'Twitter' && <Twitter size={20} />}
-                    {link.name === 'LinkedIn' && <Linkedin size={20} />}
+                    {link.kind === 'github' && <Github size={20} />}
+                    {link.kind === 'email' && <Mail size={20} />}
+                    {link.kind === 'twitter' && <Twitter size={20} />}
+                    {link.kind === 'linkedin' && <Linkedin size={20} />}
                   </div>
                   <span className="text-sm font-medium text-zinc-400 group-hover:text-zinc-100 transition-colors">
-                    {link.name}
+                    {text(link.name)}
                   </span>
                 </div>
                 <ExternalLink size={14} className="text-zinc-600 group-hover:text-zinc-400 transition-colors" />
@@ -59,8 +64,12 @@ export default function App() {
           </div>
         </section>
 
+        <HackathonSection projects={HACKATHON_PROJECTS} />
+
+        <WorkflowSection workflows={AI_WORKFLOWS} />
+
         <BentoGrid projects={PROJECTS} />
-        
+
         <PaperSection paper={FEATURED_PAPER} />
         
         <DemoSection />
@@ -70,9 +79,9 @@ export default function App() {
         {/* More Repos Section */}
         <section className="py-24 px-6 max-w-7xl mx-auto">
           <div className="bento-card bg-gradient-to-br from-zinc-900 to-zinc-950 border-zinc-800 p-12 text-center">
-            <h2 className="text-3xl font-bold mb-6">More Repositories</h2>
+            <h2 className="text-3xl font-bold mb-6">{copy.repositories.title}</h2>
             <p className="text-zinc-400 mb-8 max-w-xl mx-auto">
-              Explore my other open-source projects, experiments, and contributions on GitHub.
+              {copy.repositories.description}
             </p>
             <motion.a
               href="https://github.com/pekingdoncic?page=1&tab=repositories"
@@ -82,7 +91,7 @@ export default function App() {
               whileTap={{ scale: 0.95 }}
               className="inline-flex items-center gap-2 px-8 py-4 rounded-full bg-zinc-100 text-zinc-950 font-semibold hover:bg-white transition-all"
             >
-              <Github size={20} /> Explore on GitHub
+              <Github size={20} /> {copy.repositories.action}
             </motion.a>
           </div>
         </section>

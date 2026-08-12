@@ -1,8 +1,17 @@
+export type Language = 'en' | 'zh';
+
+export interface LocalizedText {
+  en: string;
+  zh: string;
+}
+
+export type LocalizedValue = string | LocalizedText;
+
 export interface Project {
   id: string;
-  title: string;
-  description: string;
-  tags: string[];
+  title: LocalizedValue;
+  description: LocalizedValue;
+  tags: LocalizedValue[];
   githubUrl?: string;
   demoUrl?: string;
   imageUrl?: string;
@@ -10,9 +19,9 @@ export interface Project {
 }
 
 export interface Paper {
-  title: string;
-  venue: string;
-  abstract: string;
+  title: LocalizedValue;
+  venue: LocalizedValue;
+  abstract: LocalizedValue;
   pdfUrl?: string;
   codeUrl?: string;
   videoUrl?: string;
@@ -20,15 +29,44 @@ export interface Paper {
 
 export interface BlogPost {
   id: string;
-  title: string;
-  excerpt: string;
+  title: LocalizedValue;
+  excerpt: LocalizedValue;
   date: string;
-  tags: string[];
+  tags: LocalizedValue[];
   imageUrl?: string;
 }
 
 export interface SocialLink {
-  name: string;
+  name: LocalizedValue;
+  kind: 'github' | 'email' | 'twitter' | 'linkedin';
   url: string;
-  icon: string;
+}
+
+export interface HackathonProject {
+  id: string;
+  title: LocalizedValue;
+  event: LocalizedValue;
+  award?: LocalizedValue;
+  date: string;
+  description: LocalizedValue;
+  tags: LocalizedValue[];
+  githubUrl?: string;
+  demoUrl?: string;
+  imageUrl?: string;
+}
+
+export interface AIWorkflow {
+  id: string;
+  name: LocalizedValue;
+  description: LocalizedValue;
+  tools: LocalizedValue[];
+  steps?: LocalizedValue[];
+  linkUrl?: string;
+}
+
+export interface DemoItem {
+  title: LocalizedValue;
+  bvid: string;
+  category: string;
+  description: LocalizedValue;
 }
